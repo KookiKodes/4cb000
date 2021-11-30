@@ -8,3 +8,9 @@
 ## Functionality
 1. We would like new messages to be immediately added to the chat UI for both existing conversations and new conversations.
 2. Messages should be displayed in order with the oldest messages at the top and newest messages at the bottom.
+
+## Detailed Notes
+1.
+
+## Solution
+1.
