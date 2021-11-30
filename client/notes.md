@@ -1,4 +1,5 @@
-#Sending messages
+# Sending messages
+
 ##### My detailed notes on the issues and how to resolve issues located in [ticket #1](https://github.com/KookiKodes/4cb000/issues/1). This will be removed once pull request and solution has been solved.
 
 ## Issues
