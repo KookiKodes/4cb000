@@ -14,6 +14,8 @@
 2. Reviewed thunkCreators.js to see how the messages are being fetched. Since the data is being received from our api, we could sort the received data once received from api.
 3. Reviewed sub-issue 1 to determine why messages aren't being updated immediately. Noticed Input.js component expects a prop called postMessage, however in Active.js component we are not passing the Input component a postMessage function.
 4. Reviewed utils folder to find postMessage function location. Found postMessage function located in file thunkCreators.js.
+5. Upon further review, postMessage is mapped to the Input component on line 58.
+6. Reviewing socket.emit and it's relative event handlers to see how we're updating the message.
 
 ## Possible Solutions For Sub-Issue #1
 #### 1. 
@@ -42,6 +44,16 @@
   2. Faster performance as this operation only needs to occur once every time we fetch the messages.
   ##### Cons:
   1. Causes issues if we want to dynamically sort messages and/or filter messages in the future.
-
+#### 3. Create custom sort method prop.
+  ##### Idea:
+  We'll create a sort function that accepts a string argument and returns a function that defines how to sort the received message array. We'll then create a memoized variable using useMemo method to cache the result, so that if the messages array or sortBy props don't change, the messages don't need to be re-sorted. 
+  ##### Pros:
+  1. Simple dynamic solution that allows us to slightly change how the Message component works.
+  2. Allows us to create other methods in the future to sort the messages differently if needed.
+  3. A combination of the above methods.
+  ##### Cons:
+  1. The performance is not entirely optimal as we have to sort through the data anytime the sortBy variable or messages array changes.
+  2. Required we make changes to the overall functionality of the Message compoonent.
 ## Solutions
-1. 
+1. Sub-issue #2
+   1. I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
