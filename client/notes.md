@@ -11,7 +11,19 @@
 
 ## Detailed Notes
 1. Reviewed Message.js component to see how messages are being rendered. Noticed we're received an array of messages and rendering accoringly, however there is no guarantee that the received messaged are in the correct order. 
+2. Reviewed thunkCreators.js to see how the messages are being fetched. Since the data is being received from our api, we could sort the received data once received from api.
+3. Reviewed sub-issue 1 to determine why messages aren't being updated immediately. Noticed Input.js component expects a prop called postMessage, however in Active.js component we are not passing the Input component a postMessage function.
+4. Reviewed utils folder to find postMessage function location. Found postMessage function located in file thunkCreators.js.
 
+## Possible Solutions For Sub-Issue #1
+#### 1. 
+
+  ##### Idea:
+
+  ##### Pros:
+  1.
+  ##### Cons:
+  1.
 ## Possible Solutions For Sub-Issue #2
 #### 1. Sort within Message component.
   ##### Idea:
