@@ -23,14 +23,6 @@
 11. Reviewed function in depth and noticed a small syntax issue on line 61 and 62. We were trying to combine to objects with the && operator which was returning undefined and therefore causing the ActiveChat component to not be re-rendered.
 12. Fixed sub-issue #1.
 
-## Possible Solutions For Sub-Issue #1
-#### 1. 
-
-  ##### Idea:
-  ##### Pros:
-  1.
-  ##### Cons:
-  1.
 ## Possible Solutions For Sub-Issue #2
 #### 1. Sort within Message component.
   ##### Idea:
@@ -60,9 +52,9 @@
   1. The performance is not entirely optimal as we have to sort through the data anytime the sortBy variable or messages array changes.
   2. Required we make changes to the overall functionality of the Message compoonent.
 ## Solutions
-1. #### Sub-issue #2
-    I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
-2. #### Sub-issue #1
+1. #### Sub-issue #1
     The solution required I fix two minor bugs by doing the following:
       1. Updating the postMessage function to asynchronous and await the received data after we saved the message to the database
       2. Updating the mapStateToProps function located in the ActiveChat component to correctly find the active conversation.
+2. #### Sub-issue #2
+    I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
