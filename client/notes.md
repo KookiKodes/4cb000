@@ -16,12 +16,14 @@
 4. Reviewed utils folder to find postMessage function location. Found postMessage function located in file thunkCreators.js.
 5. Upon further review, postMessage is mapped to the Input component on line 58.
 6. Reviewing socket.emit and it's relative event handlers to see how we're updating the message.
+7. Reviewed console and found error message stating that the message.conversationId didn't exist on undefined.
+8. Reviewed postMessage function and noticed that we were not waiting for the received data from saveMessage function as it returns a promise.
+9. Updated postMessage to an asynchronous function which corrected console error.
 
 ## Possible Solutions For Sub-Issue #1
 #### 1. 
 
   ##### Idea:
-
   ##### Pros:
   1.
   ##### Cons:
@@ -55,5 +57,5 @@
   1. The performance is not entirely optimal as we have to sort through the data anytime the sortBy variable or messages array changes.
   2. Required we make changes to the overall functionality of the Message compoonent.
 ## Solutions
-1. Sub-issue #2
-   1. I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
+1. #### Sub-issue #2
+    I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
