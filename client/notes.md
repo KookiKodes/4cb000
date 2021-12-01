@@ -19,6 +19,9 @@
 7. Reviewed console and found error message stating that the message.conversationId didn't exist on undefined.
 8. Reviewed postMessage function and noticed that we were not waiting for the received data from saveMessage function as it returns a promise.
 9. Updated postMessage to an asynchronous function which corrected console error.
+10. Noticed in component ActiveChat, that every time we sent a new message the ActiveChat component was not being re-rendered.
+11. Reviewed function in depth and noticed a small syntax issue on line 61 and 62. We were trying to combine to objects with the && operator which was returning undefined and therefore causing the ActiveChat component to not be re-rendered.
+12. Fixed sub-issue #1.
 
 ## Possible Solutions For Sub-Issue #1
 #### 1. 
@@ -59,3 +62,7 @@
 ## Solutions
 1. #### Sub-issue #2
     I chose the 3rd option as it provides a more dynamic way to interact and update how the messages are sorted in the future.
+2. #### Sub-issue #1
+    The solution required I fix two minor bugs by doing the following:
+      1. Updating the postMessage function to asynchronous and await the received data after we saved the message to the database
+      2. Updating the mapStateToProps function located in the ActiveChat component to correctly find the active conversation.
