@@ -1,5 +1,6 @@
 import axios from "axios";
 import socket from "../../socket";
+import moment from "moment";
 import {
   gotConversations,
   addConversation,
@@ -69,9 +70,16 @@ export const logout = (id) => async (dispatch) => {
 
 // CONVERSATIONS THUNK CREATORS
 
+const createdAt = (a, b) =>
+  moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
+
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
+    data.map((convo) => {
+      convo.messages = convo.messages.sort(createdAt);
+      return convo;
+    });
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);
