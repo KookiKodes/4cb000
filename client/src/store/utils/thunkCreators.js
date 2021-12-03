@@ -1,5 +1,6 @@
 import axios from "axios";
 import socket from "../../socket";
+import moment from "moment";
 import {
   gotConversations,
   addConversation,
@@ -67,11 +68,19 @@ export const logout = (id) => async (dispatch) => {
   }
 };
 
+// Helper functions for sorting all conversations
+const createdAt = (a, b) =>
+  moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
+
+const sortConversation = (conversation) =>
+  (conversation.messages = conversation.messages.sort(createdAt));
+
 // CONVERSATIONS THUNK CREATORS
 
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
+    data.forEach(sortConversation);
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);
@@ -93,9 +102,9 @@ const sendMessage = (data, body) => {
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
-export const postMessage = (body) => (dispatch) => {
+export const postMessage = (body) => async (dispatch) => {
   try {
-    const data = saveMessage(body);
+    const data = await saveMessage(body);
 
     if (!body.conversationId) {
       dispatch(addConversation(body.recipientId, data.message));
