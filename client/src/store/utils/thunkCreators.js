@@ -68,11 +68,19 @@ export const logout = (id) => async (dispatch) => {
   }
 };
 
+// Helper functions for sorting all conversations
+const createdAt = (a, b) =>
+  moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
+
+const sortConversation = (conversation) =>
+  (conversation.messages = conversation.messages.sort(createdAt));
+
 // CONVERSATIONS THUNK CREATORS
 
 export const fetchConversations = () => async (dispatch) => {
   try {
     const { data } = await axios.get("/api/conversations");
+    data.forEach(sortConversation);
     dispatch(gotConversations(data));
   } catch (error) {
     console.error(error);

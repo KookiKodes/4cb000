@@ -20,16 +20,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const createdAt = (a, b) =>
-  moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
-
 const Chat = (props) => {
   const classes = useStyles();
   const { conversation } = props;
   const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
-    conversation.messages = await conversation.messages.sort(createdAt);
     await props.setActiveChat(conversation.otherUser.username);
   };
 
