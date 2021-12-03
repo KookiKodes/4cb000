@@ -3,12 +3,13 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
   Typography,
   Button,
   FormControl,
   TextField,
 } from "@material-ui/core";
+import SideBanner from "./components/SideBanner";
+import { PageContainer } from "./components/Utils";
 import { login } from "./store/utils/thunkCreators";
 
 const Login = (props) => {
@@ -28,11 +29,18 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
+    <PageContainer container justify="center">
+      <SideBanner />
+      <Grid container xs={7}>
         <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
+          <Typography>Don't have an account?</Typography>
+          <Button
+            size="large"
+            color="primary"
+            onClick={() => history.push("/register")}
+          >
+            Register
+          </Button>
         </Grid>
         <form onSubmit={handleLogin}>
           <Grid>
@@ -55,14 +63,19 @@ const Login = (props) => {
               />
             </FormControl>
             <Grid>
-              <Button type="submit" variant="contained" size="large">
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+              >
                 Login
               </Button>
             </Grid>
           </Grid>
         </form>
-      </Box>
-    </Grid>
+      </Grid>
+    </PageContainer>
   );
 };
 

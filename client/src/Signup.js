@@ -3,13 +3,14 @@ import { Redirect, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   Grid,
-  Box,
   Typography,
   Button,
   FormControl,
   TextField,
   FormHelperText,
 } from "@material-ui/core";
+import { PageContainer } from "./components/Utils";
+import SideBanner from "./components/SideBanner";
 import { register } from "./store/utils/thunkCreators";
 
 const Login = (props) => {
@@ -37,8 +38,9 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
+    <PageContainer container justify="center">
+      <SideBanner />
+      <Grid container justify="center" xs={7}>
         <Grid container item>
           <Typography>Need to log in?</Typography>
           <Button onClick={() => history.push("/login")}>Login</Button>
@@ -102,8 +104,8 @@ const Login = (props) => {
             </Button>
           </Grid>
         </form>
-      </Box>
-    </Grid>
+      </Grid>
+    </PageContainer>
   );
 };
 
