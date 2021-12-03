@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@material-ui/core";
+import moment from "moment";
 import { BadgeAvatar, ChatContent } from "../Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import { setActiveChat } from "../../store/activeConversation";
@@ -14,10 +15,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     "&:hover": {
-      cursor: "grab"
-    }
-  }
+      cursor: "grab",
+    },
+  },
 }));
+
+const createdAt = (a, b) =>
+  moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
 
 const Chat = (props) => {
   const classes = useStyles();
@@ -25,6 +29,7 @@ const Chat = (props) => {
   const { otherUser } = conversation;
 
   const handleClick = async (conversation) => {
+    conversation.messages = await conversation.messages.sort(createdAt);
     await props.setActiveChat(conversation.otherUser.username);
   };
 
@@ -45,7 +50,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setActiveChat: (id) => {
       dispatch(setActiveChat(id));
-    }
+    },
   };
 };
 
