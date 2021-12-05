@@ -7,10 +7,14 @@ import {
   Button,
   FormControl,
   TextField,
+  withStyles,
+  Box,
 } from "@material-ui/core";
 import SideBanner from "./components/SideBanner";
-import { PageContainer } from "./components/Utils";
+import { PageContainer, FormButton } from "./components/Utils";
 import { login } from "./store/utils/thunkCreators";
+
+const useStyles = withStyles({});
 
 const Login = (props) => {
   const history = useHistory();
@@ -29,20 +33,34 @@ const Login = (props) => {
   }
 
   return (
-    <PageContainer container justify="center">
+    <PageContainer container justifyContent="center">
       <SideBanner />
-      <Grid container xs={7}>
-        <Grid container item>
-          <Typography>Don't have an account?</Typography>
-          <Button
+      <Grid
+        component={Box}
+        container
+        xs={7}
+        justifyContent="center"
+        alignItems="flex-start"
+        py={3.75}
+        px={5.25}
+      >
+        <Grid
+          container
+          item
+          xs={12}
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <Typography color="textSecondary">Don't have an account?</Typography>
+          <FormButton
             size="large"
             color="primary"
             onClick={() => history.push("/register")}
           >
-            Register
-          </Button>
+            Create account
+          </FormButton>
         </Grid>
-        <form onSubmit={handleLogin}>
+        <Grid component="form" onSubmit={handleLogin}>
           <Grid>
             <Grid>
               <FormControl margin="normal" required>
@@ -63,17 +81,17 @@ const Login = (props) => {
               />
             </FormControl>
             <Grid>
-              <Button
+              <FormButton
                 type="submit"
                 variant="contained"
                 size="large"
                 color="primary"
               >
                 Login
-              </Button>
+              </FormButton>
             </Grid>
           </Grid>
-        </form>
+        </Grid>
       </Grid>
     </PageContainer>
   );
