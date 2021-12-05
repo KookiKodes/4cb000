@@ -9,22 +9,22 @@ const useStyles = makeStyles({
     background: `top / cover no-repeat url(${bannerImg})`,
   },
   bubbleContainer: {
+    background: "linear-gradient(180deg, #3A8DFFD9 0%, #86B9FFD9 100%)",
     display: "flex",
     height: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    background: "linear-gradient(180deg, #3A8DFFD9 0%, #86B9FFD9 100%)",
     gap: "2rem",
   },
 });
 
-const SideBanner = (props) => {
+const SideBanner = () => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} xs={5} justify="center">
-      <Box container px={9} className={classes.bubbleContainer}>
+      <Box px={9} className={classes.bubbleContainer}>
         <ChatBubble />
         <WhiteTypography variant="h5" align="center">
           Converse with anyone with any language
