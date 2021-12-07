@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid, Box, makeStyles } from "@material-ui/core";
-import { WhiteTypography } from "./Utils";
-import { ReactComponent as ChatBubble } from "../assets/svgs/bubble.svg";
-import bannerImg from "../assets/images/bg-img.png";
+import { WhiteTypography } from "../utils";
+import { ReactComponent as ChatBubble } from "../../assets/svgs/bubble.svg";
+import bannerImg from "../../assets/images/bg-img.png";
 
 const useStyles = makeStyles({
   root: {

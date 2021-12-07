@@ -1,23 +1,14 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-  withStyles,
-  Box,
-} from "@material-ui/core";
-import SideBanner from "./components/SideBanner";
-import { PageContainer, FormButton } from "./components/Utils";
+import { Grid, FormControl, TextField, withStyles } from "@material-ui/core";
+import { FormButton } from "./components/utils";
 import { login } from "./store/utils/thunkCreators";
+import { AccessLayout } from "./components/Access";
 
 const useStyles = withStyles({});
 
 const Login = (props) => {
-  const history = useHistory();
   const { user, login } = props;
 
   const handleLogin = async (event) => {
@@ -33,67 +24,44 @@ const Login = (props) => {
   }
 
   return (
-    <PageContainer container justifyContent="center">
-      <SideBanner />
-      <Grid
-        component={Box}
-        container
-        xs={7}
-        justifyContent="center"
-        alignItems="flex-start"
-        py={3.75}
-        px={5.25}
-      >
-        <Grid
-          container
-          item
-          xs={12}
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          <Typography color="textSecondary">Don't have an account?</Typography>
-          <FormButton
-            size="large"
-            color="primary"
-            onClick={() => history.push("/register")}
-          >
-            Create account
-          </FormButton>
-        </Grid>
-        <Grid component="form" onSubmit={handleLogin}>
+    <AccessLayout
+      href="/register"
+      linkText="Create account"
+      flavorText="Don't have an account?"
+    >
+      <form onSubmit={handleLogin}>
+        <Grid>
           <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
             <FormControl margin="normal" required>
               <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
+                aria-label="username"
+                label="Username"
+                name="username"
+                type="text"
               />
             </FormControl>
-            <Grid>
-              <FormButton
-                type="submit"
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                Login
-              </FormButton>
-            </Grid>
+          </Grid>
+          <FormControl margin="normal" required>
+            <TextField
+              label="password"
+              aria-label="password"
+              type="password"
+              name="password"
+            />
+          </FormControl>
+          <Grid>
+            <FormButton
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+            >
+              Login
+            </FormButton>
           </Grid>
         </Grid>
-      </Grid>
-    </PageContainer>
+      </form>
+    </AccessLayout>
   );
 };
 
