@@ -61,15 +61,19 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     background: "#FFF",
-    height: "70%",
     paddingLeft: "3rem",
     paddingRight: "5rem",
     gap: "1.5rem",
+    height: "75%",
+    justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
       borderBottomLeftRadius: ".5rem",
       borderBottomRightRadius: ".5rem",
       height: "min-content",
       padding: "1rem 3rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      padding: "1rem",
     },
   },
 });

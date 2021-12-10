@@ -1,9 +1,13 @@
 import React from "react";
 import { Box, makeStyles, Typography } from "@material-ui/core";
+import { theme } from "../../themes/theme";
 
 const useStyles = makeStyles({
   header: {
     fontWeight: 600,
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+    },
   },
 });
 
@@ -11,7 +15,7 @@ const AccessForm = ({ children, header, ...props }) => {
   const classes = useStyles();
   return (
     <>
-      <Box>
+      <Box justifyContent="center">
         <Typography variant="h5" className={classes.header}>
           {header}
         </Typography>
