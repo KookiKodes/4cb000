@@ -1,4 +1,4 @@
-export { default as AccessLayout } from "./Layout";
+export { default as AccessLayout } from "./AccessLayout";
 export { default as AccessForm } from "./AccessForm";
 export { default as AccessField } from "./AccessField";
 export { default as AccessButton } from "./AccessButton";
