@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Button,
-  FormControl,
-  TextField,
-  FormHelperText,
-} from "@material-ui/core";
+import { FormControl, FormHelperText } from "@material-ui/core";
 import { register } from "./store/utils/thunkCreators";
-import { AccessLayout } from "./components/Access";
+import {
+  AccessLayout,
+  AccessField,
+  AccessForm,
+  AccessButton,
+  AccessFieldGroup,
+} from "./components/Access";
 
 const Login = (props) => {
   const { user, register } = props;
@@ -40,65 +40,58 @@ const Login = (props) => {
       linkText="Login"
       flavorText="Already have an account?"
     >
-      <form onSubmit={handleRegister}>
-        <Grid>
-          <Grid>
-            <FormControl>
-              <TextField
-                aria-label="username"
-                label="Username"
-                name="username"
-                type="text"
-                required
-              />
-            </FormControl>
-          </Grid>
-          <Grid>
-            <FormControl>
-              <TextField
-                label="E-mail address"
-                aria-label="e-mail address"
-                type="email"
-                name="email"
-                required
-              />
-            </FormControl>
-          </Grid>
-          <Grid>
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <TextField
-                aria-label="password"
-                label="Password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="password"
-                required
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-          <Grid>
-            <FormControl error={!!formErrorMessage.confirmPassword}>
-              <TextField
-                label="Confirm Password"
-                aria-label="confirm password"
-                type="password"
-                inputProps={{ minLength: 6 }}
-                name="confirmPassword"
-                required
-              />
-              <FormHelperText>
-                {formErrorMessage.confirmPassword}
-              </FormHelperText>
-            </FormControl>
-          </Grid>
-          <Button type="submit" variant="contained" size="large">
-            Create
-          </Button>
-        </Grid>
-      </form>
+      <AccessForm header="Create an account." onSubmit={handleRegister}>
+        <AccessFieldGroup>
+          <FormControl fullWidth>
+            <AccessField
+              aria-label="username"
+              label="Username"
+              name="username"
+              type="text"
+              required
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <AccessField
+              label="E-mail address"
+              aria-label="e-mail address"
+              type="email"
+              name="email"
+              required
+            />
+          </FormControl>
+          <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
+            <AccessField
+              aria-label="password"
+              label="Password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="password"
+              required
+            />
+            <FormHelperText>{formErrorMessage.confirmPassword}</FormHelperText>
+          </FormControl>
+          <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
+            <AccessField
+              label="Confirm Password"
+              aria-label="confirm password"
+              type="password"
+              inputProps={{ minLength: 6 }}
+              name="confirmPassword"
+              required
+            />
+            <FormHelperText>{formErrorMessage.confirmPassword}</FormHelperText>
+          </FormControl>
+        </AccessFieldGroup>
+        <AccessButton
+          type="submit"
+          variant="contained"
+          size="large"
+          color="primary"
+        >
+          Create
+        </AccessButton>
+      </AccessForm>
     </AccessLayout>
   );
 };
