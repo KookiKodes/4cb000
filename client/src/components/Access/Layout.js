@@ -7,9 +7,8 @@ import {
   Box,
 } from "@material-ui/core";
 import { PageContainer, SideBanner } from "./utils";
-import { theme } from "../../themes/theme";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -76,7 +75,7 @@ const useStyles = makeStyles({
       padding: "1rem",
     },
   },
-});
+}));
 
 const Layout = (props) => {
   const classes = useStyles();

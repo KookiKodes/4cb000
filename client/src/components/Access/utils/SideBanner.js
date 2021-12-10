@@ -2,9 +2,8 @@ import React from "react";
 import { Box, Typography, makeStyles } from "@material-ui/core";
 import { ReactComponent as ChatBubble } from "../../../assets/svgs/bubble.svg";
 import bannerImg from "../../../assets/images/bg-img.png";
-import { theme } from "../../../themes/theme";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: "absolute",
     background: `top / cover no-repeat url(${bannerImg})`,
@@ -34,7 +33,7 @@ const useStyles = makeStyles({
   header: {
     color: "#FFF",
   },
-});
+}));
 
 const SideBanner = () => {
   const classes = useStyles();
