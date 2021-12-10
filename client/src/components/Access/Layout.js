@@ -20,16 +20,18 @@ const useStyles = makeStyles({
     width: "calc(60% - 5.25rem)",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
-      gap: 0,
       justifyContent: "center",
+      gap: 0,
+      padding: "1rem 2rem",
     },
   },
   link: {
     display: "flex",
     justifyContent: "center",
-    padding: "1rem 2rem 1rem .5rem",
+    padding: "1rem 2rem",
     fontWeight: "600",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
+      padding: "1rem",
       fontSize: ".75rem",
     },
   },
@@ -50,6 +52,9 @@ const useStyles = makeStyles({
     [theme.breakpoints.down("sm")]: {
       borderTopLeftRadius: ".5rem",
       borderTopRightRadius: ".5rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      gap: ".5rem",
     },
   },
   childrenContainer: {
