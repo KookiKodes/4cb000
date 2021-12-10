@@ -24,6 +24,7 @@ const useStyles = makeStyles({
       gap: 0,
       padding: "1rem 2rem",
     },
+    minWidth: "16rem",
   },
   link: {
     display: "flex",
@@ -63,13 +64,12 @@ const useStyles = makeStyles({
     background: "#FFF",
     paddingLeft: "3rem",
     paddingRight: "5rem",
+    paddingTop: "4rem",
     gap: "1.5rem",
-    height: "75%",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     [theme.breakpoints.down("sm")]: {
       borderBottomLeftRadius: ".5rem",
       borderBottomRightRadius: ".5rem",
-      height: "min-content",
       padding: "1rem 3rem",
     },
     [theme.breakpoints.down("xs")]: {

@@ -25,9 +25,8 @@ const useStyles = makeStyles({
     display: "none",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
     gap: "2rem",
-    height: "80%",
+    paddingTop: "13.5rem",
     [theme.breakpoints.up("md")]: {
       display: "flex",
     },
