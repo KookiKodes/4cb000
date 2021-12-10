@@ -88,7 +88,12 @@ const Layout = (props) => {
           <Typography className={classes.flavorText} color="textSecondary">
             {props.flavorText}
           </Typography>
-          <MuiLink component={Link} to={props.href} className={classes.link}>
+          <MuiLink
+            component={Link}
+            to={props.href}
+            alt={`Go to ${props.linkText}`}
+            className={classes.link}
+          >
             {props.linkText}
           </MuiLink>
         </Box>

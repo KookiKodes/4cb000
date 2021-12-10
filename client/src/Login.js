@@ -1,12 +1,7 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  FormControl,
-  Grid,
-  Link as MuiLink,
-  makeStyles,
-} from "@material-ui/core";
+import { FormControl, Link as MuiLink, makeStyles } from "@material-ui/core";
 import { login } from "./store/utils/thunkCreators";
 import {
   AccessLayout,

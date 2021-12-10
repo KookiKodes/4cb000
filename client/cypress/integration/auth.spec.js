@@ -10,7 +10,7 @@ describe("Auth Screens", () => {
 
   it("Loads login page", () => {
     cy.visit("http://localhost:3000/register");
-    cy.contains("button", "Login").click();
+    cy.contains("a", "Login").click();
 
     // Check expected UI elements.
     cy.contains("button", "Login");
