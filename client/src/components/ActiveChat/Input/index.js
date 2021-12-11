@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import {
-  FormControl,
-  FilledInput,
-  ButtonGroup,
-  Button,
-} from "@material-ui/core";
+import { FormControl, FilledInput, IconButton } from "@material-ui/core";
+import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../../store/utils/thunkCreators";
+
+// components
+import ActionGroup from "./ActionGroup";
+import AttachAction from "./AttachAction";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -19,6 +19,8 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#F4F6FA",
     borderRadius: 8,
     marginBottom: 20,
+    color: "#9CADC8",
+    fontWeight: "600",
   },
 }));
 
@@ -55,15 +57,12 @@ const Input = (props) => {
           name="text"
           onChange={handleChange}
           endAdornment={
-            <ButtonGroup
-              variant="contained"
-              color="primary"
-              aria-label="contained primary button group"
-            >
-              <Button>One</Button>
-              <Button>Two</Button>
-              <Button>Three</Button>
-            </ButtonGroup>
+            <ActionGroup>
+              <IconButton color="inherit">
+                <EmojiEmotionsOutlinedIcon />
+              </IconButton>
+              <AttachAction />
+            </ActionGroup>
           }
         />
       </FormControl>
