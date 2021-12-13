@@ -21,10 +21,10 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const PageContainer = ({ children, ...props }) => {
+const PageContainer = ({ children }) => {
   const { root, backgroundGradient } = useStyle();
   return (
-    <Box className={root} {...props}>
+    <Box className={root}>
       <Box className={backgroundGradient}>{children}</Box>
     </Box>
   );
