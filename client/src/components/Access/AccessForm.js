@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) => ({
   header: {
     fontWeight: 600,
     margin: 0,
-    [theme.breakpoints.down("xs")]: {
-      textAlign: "center",
-      fontSize: 24,
-    },
   },
   form: {
     gap: theme.spacing(4),
