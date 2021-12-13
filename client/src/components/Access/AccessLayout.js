@@ -4,101 +4,82 @@ import {
   Typography,
   makeStyles,
   Link as MuiLink,
-  Box,
+  Grid,
+  ThemeProvider,
 } from "@material-ui/core";
 import { PageContainer, SideBanner } from "./utils";
+import { accessTheme } from "../../themes/accessTheme";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "3rem",
-    padding: "1.875rem 2.625rem",
-    position: "relative",
-    right: 0,
-    width: "calc(60% - 5.25rem)",
-    [theme.breakpoints.down("sm")]: {
-      width: "100%",
-      justifyContent: "center",
-      gap: 0,
-      padding: "1rem 2rem",
-    },
-    minWidth: "16rem",
-  },
-  link: {
-    display: "flex",
-    justifyContent: "center",
-    padding: "1rem 2rem",
-    fontWeight: "600",
-    [theme.breakpoints.down("xs")]: {
-      padding: "1rem",
-      fontSize: ".75rem",
-    },
-  },
-  flavorText: {
-    fontWeight: "normal",
-    fontSize: ".875rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: ".625rem",
-    },
-  },
   flavorContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    width: "100%",
-    gap: "2rem",
-    background: "#FFF",
+    background: accessTheme.palette.mobile.background,
+    padding: theme.spacing(4, 5, 0, 0),
+    flexWrap: "nowrap",
+    maxWidth: "1280px",
+    height: "min-content",
+    gap: theme.spacing(3),
     [theme.breakpoints.down("sm")]: {
-      borderTopLeftRadius: ".5rem",
-      borderTopRightRadius: ".5rem",
-    },
-    [theme.breakpoints.down("xs")]: {
-      gap: ".5rem",
+      padding: theme.spacing(3),
+      borderRadius: theme.spacing(1, 1, 0, 0),
     },
   },
-  childrenContainer: {
-    display: "flex",
-    flexDirection: "column",
-    background: "#FFF",
-    paddingLeft: "3rem",
-    paddingRight: "5rem",
-    paddingTop: "4rem",
-    gap: "1.5rem",
-    justifyContent: "flex-start",
+  mobileText: {
     [theme.breakpoints.down("sm")]: {
-      borderBottomLeftRadius: ".5rem",
-      borderBottomRightRadius: ".5rem",
-      padding: "1rem 3rem",
+      fontSize: 12,
+      padding: 0,
     },
-    [theme.breakpoints.down("xs")]: {
-      padding: "1rem",
-    },
+  },
+  children: {
+    maxWidth: "100%",
+    width: "100%",
   },
 }));
 
 const Layout = (props) => {
   const classes = useStyles();
   return (
-    <PageContainer>
-      <SideBanner />
-      <Box className={classes.root}>
-        <Box className={classes.flavorContainer}>
-          <Typography className={classes.flavorText} color="textSecondary">
-            {props.flavorText}
-          </Typography>
-          <MuiLink
-            component={Link}
-            to={props.href}
-            alt={`Go to ${props.linkText}`}
-            className={classes.link}
-          >
-            {props.linkText}
-          </MuiLink>
-        </Box>
-        <Box className={classes.childrenContainer}>{props.children}</Box>
-      </Box>
-    </PageContainer>
+    <ThemeProvider theme={accessTheme}>
+      <PageContainer>
+        <Grid container>
+          <Grid item md={5}>
+            <SideBanner />
+          </Grid>
+          <Grid container item md={7} xs={12} direction="column">
+            <Grid
+              container
+              item
+              xs={1}
+              justifyContent="flex-end"
+              alignItems="center"
+              className={classes.flavorContainer}
+            >
+              <Grid item>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  className={classes.mobileText}
+                >
+                  {props.flavorText}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <MuiLink
+                  component={Link}
+                  to={props.href}
+                  alt={`Go to ${props.linkText}`}
+                  className={classes.mobileText}
+                >
+                  {props.linkText}
+                </MuiLink>
+              </Grid>
+            </Grid>
+            <Grid item xs={9} className={classes.children}>
+              {props.children}
+            </Grid>
+          </Grid>
+        </Grid>
+      </PageContainer>
+    </ThemeProvider>
   );
 };
 
