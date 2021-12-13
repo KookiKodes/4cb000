@@ -37,10 +37,10 @@ const SideBanner = () => {
           className={classes.container}
           spacing={2}
         >
-          <Grid item xs={10} className={classes.center}>
+          <Grid item xs={8} className={classes.center}>
             <ChatBubble />
           </Grid>
-          <Grid item xs={10} className={classes.center}>
+          <Grid item xs={8} className={classes.center}>
             <Typography variant="h5" align="center" className={classes.header}>
               Converse with anyone with any language
             </Typography>
