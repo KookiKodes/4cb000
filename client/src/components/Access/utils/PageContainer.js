@@ -1,25 +1,32 @@
 import React from "react";
-import { Container, makeStyles } from "@material-ui/core";
+import { Box, makeStyles } from "@material-ui/core";
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme) => ({
   root: {
     display: "flex",
-    justifyContent: "flex-end",
-    minHeight: "100vh",
-    minWidth: "100vw",
-    height: "min-content",
-    fontSize: ".875rem",
-    position: "relative",
-    padding: 0,
+    width: "100vw",
+    height: "100vh",
+    [theme.breakpoints.down("sm")]: {
+      background: theme.palette.sideBanner.image,
+    },
   },
-});
+  backgroundGradient: {
+    display: "flex",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      background: theme.palette.sideBanner.gradient,
+      alignItems: "center",
+      padding: theme.spacing(2),
+    },
+  },
+}));
 
 const PageContainer = ({ children, ...props }) => {
-  const { root } = useStyle();
+  const { root, backgroundGradient } = useStyle();
   return (
-    <Container classes={{ root }} spacing={0} {...props}>
-      {children}
-    </Container>
+    <Box className={root} {...props}>
+      <Box className={backgroundGradient}>{children}</Box>
+    </Box>
   );
 };
 
