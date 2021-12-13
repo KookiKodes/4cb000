@@ -1,37 +1,27 @@
 import React from "react";
-import { Box, Typography, makeStyles } from "@material-ui/core";
+import { Grid, Typography, makeStyles } from "@material-ui/core";
 import { ReactComponent as ChatBubble } from "../../../assets/svgs/bubble.svg";
-import bannerImg from "../../../assets/images/bg-img.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    position: "absolute",
-    background: `top / cover no-repeat url(${bannerImg})`,
-    height: "100vh",
-    minWidth: "100%",
-    [theme.breakpoints.up("md")]: {
-      minWidth: "40%",
-      maxWidth: "40%",
-    },
-    left: 0,
-  },
-  backgroundGradient: {
-    background: "linear-gradient(180deg, #3A8DFFD9 0%, #86B9FFD9 100%)",
     height: "100%",
-    position: "relative",
-  },
-  bubbleContainer: {
-    display: "none",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "2rem",
-    paddingTop: "13.5rem",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
+    background: theme.palette.sideBanner.image,
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
     },
+  },
+  gradient: {
+    background: theme.palette.sideBanner.gradient,
+  },
+  container: {
+    paddingTop: theme.spacing(25),
   },
   header: {
-    color: "#FFF",
+    color: theme.palette.sideBanner.text,
+  },
+  center: {
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
@@ -39,16 +29,25 @@ const SideBanner = () => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.root}>
-      <Box px={9} className={classes.backgroundGradient}>
-        <Box className={classes.bubbleContainer}>
-          <ChatBubble />
-          <Typography variant="h5" align="center" className={classes.header}>
-            Converse with anyone with any language
-          </Typography>
-        </Box>
-      </Box>
-    </Box>
+    <Grid container className={classes.root}>
+      <Grid item xs={12} className={classes.gradient}>
+        <Grid
+          container
+          justifyContent="center"
+          className={classes.container}
+          spacing={2}
+        >
+          <Grid item xs={10} className={classes.center}>
+            <ChatBubble />
+          </Grid>
+          <Grid item xs={10} className={classes.center}>
+            <Typography variant="h5" align="center" className={classes.header}>
+              Converse with anyone with any language
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
