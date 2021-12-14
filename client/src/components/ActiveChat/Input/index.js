@@ -9,23 +9,26 @@ import { postMessage } from "../../../store/utils/thunkCreators";
 import ActionGroup from "./ActionGroup";
 import AttachAction from "./AttachAction";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: "flex-end",
     marginTop: 15,
     "& .Mui-focused": {
-      background: "#F4F6FA",
+      background: theme.palette.background.input,
     },
   },
   input: {
     height: 70,
     borderRadius: 8,
     marginBottom: 20,
-    color: "#D1D9E6",
     fontWeight: "600",
-    background: "#F4F6FA",
+    background: theme.palette.background.input,
     "&:hover": {
-      background: "#F4F6FA",
+      background: theme.palette.background.input,
+    },
+    "& .MuiFilledInput-input::placeholder": {
+      color: theme.palette.text.secondary,
+      opacity: 1,
     },
   },
 }));
@@ -61,7 +64,6 @@ const Input = (props) => {
           placeholder="Type something..."
           value={text}
           name="text"
-          color="secondary"
           onChange={handleChange}
           endAdornment={
             <ActionGroup>
