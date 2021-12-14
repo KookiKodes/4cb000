@@ -1,22 +1,18 @@
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { FormControl, Link as MuiLink, makeStyles } from "@material-ui/core";
+import { Link as MuiLink, makeStyles, TextField } from "@material-ui/core";
+import { AccessLayout, AccessForm, AccessButton } from "./components/Access";
 import { login } from "./store/utils/thunkCreators";
-import {
-  AccessLayout,
-  AccessField,
-  AccessForm,
-  AccessButton,
-  AccessFieldGroup,
-} from "./components/Access";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   adornment: {
     fontSize: ".75rem",
     fontWeight: 600,
+    padding: theme.spacing(0, 2),
+    minWidth: 0,
   },
-});
+}));
 
 const Login = (props) => {
   const { user, login } = props;
@@ -41,35 +37,33 @@ const Login = (props) => {
       flavorText="Don't have an account?"
     >
       <AccessForm onSubmit={handleLogin} header="Welcome back!">
-        <AccessFieldGroup>
-          <FormControl fullWidth required>
-            <AccessField
-              aria-label="username"
-              label="Username"
-              name="username"
-              type="text"
-            />
-          </FormControl>
-          <FormControl fullWidth required>
-            <AccessField
-              label="Password"
-              aria-label="password"
-              type="password"
-              name="password"
-              InputProps={{
-                endAdornment: (
-                  <MuiLink
-                    component={Link}
-                    classes={{ root: classes.adornment }}
-                    to="/login"
-                  >
-                    Forgot?
-                  </MuiLink>
-                ),
-              }}
-            />
-          </FormControl>
-        </AccessFieldGroup>
+        <TextField
+          aria-label="username"
+          label="Username"
+          name="username"
+          type="text"
+          fullWidth
+          required
+        />
+        <TextField
+          label="Password"
+          aria-label="password"
+          type="password"
+          name="password"
+          fullWidth
+          required
+          InputProps={{
+            endAdornment: (
+              <MuiLink
+                component={Link}
+                classes={{ root: classes.adornment }}
+                to="/login"
+              >
+                Forgot?
+              </MuiLink>
+            ),
+          }}
+        />
         <AccessButton
           type="submit"
           variant="contained"
