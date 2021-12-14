@@ -13,14 +13,20 @@ const useStyles = makeStyles(() => ({
   root: {
     justifySelf: "flex-end",
     marginTop: 15,
+    "& .Mui-focused": {
+      background: "#F4F6FA",
+    },
   },
   input: {
     height: 70,
-    backgroundColor: "#F4F6FA",
     borderRadius: 8,
     marginBottom: 20,
-    color: "#9CADC8",
+    color: "#D1D9E6",
     fontWeight: "600",
+    background: "#F4F6FA",
+    "&:hover": {
+      background: "#F4F6FA",
+    },
   },
 }));
 
@@ -55,6 +61,7 @@ const Input = (props) => {
           placeholder="Type something..."
           value={text}
           name="text"
+          color="secondary"
           onChange={handleChange}
           endAdornment={
             <ActionGroup>
