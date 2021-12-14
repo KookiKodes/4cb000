@@ -5,6 +5,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     alignItems: "center",
+    color: theme.palette.text.secondary,
+    opacity: 0.5,
   },
 }));
 
