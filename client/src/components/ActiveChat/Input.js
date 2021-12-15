@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { FormControl, FilledInput, IconButton } from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
@@ -42,21 +42,13 @@ const Input = (props) => {
 
   const handleChange = ({ target }) => setText(target.value);
 
-  const addImage = useCallback(
-    (id, currentUrls) => (urls) =>
-      addToCache(id, { images: [...currentUrls, ...urls] }),
-    [addToCache]
-  );
+  const addImage = (id, currentUrls) => (urls) =>
+    addToCache(id, { images: [...currentUrls, ...urls] });
 
-  const removeImage = useCallback(
-    (id, currentUrls) => (index) =>
-      addToCache(id, {
-        images: currentUrls
-          .slice(0, index)
-          .concat(currentUrls.slice(index + 1)),
-      }),
-    [addToCache]
-  );
+  const removeImage = (id, currentUrls) => (index) =>
+    addToCache(id, {
+      images: currentUrls.slice(0, index).concat(currentUrls.slice(index + 1)),
+    });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
