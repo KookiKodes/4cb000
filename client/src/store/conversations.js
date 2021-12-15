@@ -4,6 +4,7 @@ import {
   addSearchedUsersToStore,
   removeOfflineUserFromStore,
   addMessageToStore,
+  addDataToConversationCache,
 } from "./utils/reducerFunctions";
 
 // ACTIONS
@@ -15,6 +16,7 @@ const REMOVE_OFFLINE_USER = "REMOVE_OFFLINE_USER";
 const SET_SEARCHED_USERS = "SET_SEARCHED_USERS";
 const CLEAR_SEARCHED_USERS = "CLEAR_SEARCHED_USERS";
 const ADD_CONVERSATION = "ADD_CONVERSATION";
+const ADD_CACHE_TO_CONVERSATION = "ADD_CACHE_TO_CONVERSATION";
 
 // ACTION CREATORS
 
@@ -67,6 +69,13 @@ export const addConversation = (recipientId, newMessage) => {
   };
 };
 
+export const addDataToCache = (convoId, data) => {
+  return {
+    type: ADD_CACHE_TO_CONVERSATION,
+    payload: { convoId, data },
+  };
+};
+
 // REDUCER
 
 const reducer = (state = [], action) => {
@@ -90,6 +99,12 @@ const reducer = (state = [], action) => {
         state,
         action.payload.recipientId,
         action.payload.newMessage
+      );
+    case ADD_CACHE_TO_CONVERSATION:
+      return addDataToConversationCache(
+        state,
+        action.payload.convoId,
+        action.payload.data
       );
     default:
       return state;
