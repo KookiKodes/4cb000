@@ -12,14 +12,12 @@ const useStyles = makeStyles((theme) => ({
 
 const getDataUrls = (files) => Promise.all(Array.from(files).map(getDataUrl));
 
-const AttachAction = ({ onChange, children, ...props }) => {
+const AttachImageAction = ({ onChange, children, ...props }) => {
   const classes = useStyles();
 
   const handleChange = async ({ target }) => {
     const urls = await getDataUrls(target.files);
-    if (onChange) {
-      onChange(target.name, urls);
-    }
+    if (onChange) onChange(urls);
   };
 
   return (
@@ -31,7 +29,7 @@ const AttachAction = ({ onChange, children, ...props }) => {
         multiple
         type="file"
         onChange={handleChange}
-        name="images"
+        name={props.name || "images"}
       />
       <label htmlFor="contained-button-file">
         <IconButton
@@ -47,4 +45,4 @@ const AttachAction = ({ onChange, children, ...props }) => {
   );
 };
 
-export default AttachAction;
+export default AttachImageAction;
