@@ -79,3 +79,14 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     }
   });
 };
+
+export const addDataToConversationCache = (state, convoId, data) => {
+  return state.map((convo) => {
+    if (convo.id === convoId) {
+      const convoCopy = { ...convo };
+      convoCopy.cache = data;
+      return convoCopy;
+    }
+    return convo;
+  });
+};
