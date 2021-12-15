@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  FormControl,
-  FilledInput,
-  IconButton,
-  Divider,
-  Avatar,
-} from "@material-ui/core";
+import React, { useCallback, useState } from "react";
+import { FormControl, FilledInput, IconButton } from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,28 +7,25 @@ import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
 
 // components
-import { ActionGroup, AttachAction } from "../Actions/index";
+import { ActionGroup, AttachImageAction } from "../Actions/index";
+import { ImagePreview } from "./index";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: "flex-end",
     marginTop: 15,
     "& .Mui-focused": {
-      background: theme.palette.background.input,
+      background: theme.palette.background.secondary,
     },
-  },
-  image: {
-    width: theme.spacing(8),
-    height: theme.spacing(8),
   },
   input: {
     height: 70,
-    borderRadius: 8,
+    borderRadius: theme.spacing(1),
     marginBottom: 20,
     fontWeight: "600",
-    background: theme.palette.background.input,
+    background: theme.palette.background.secondary,
     "&:hover": {
-      background: theme.palette.background.input,
+      background: theme.palette.background.secondary,
     },
     "& .MuiFilledInput-input::placeholder": {
       color: theme.palette.text.secondary,
@@ -48,10 +39,22 @@ const Input = (props) => {
   const [data, setData] = useState({ text: "", images: [] });
   const { postMessage, otherUser, conversationId, user } = props;
 
-  const handleChange = (name, value) => {
-    console.log(value);
+  const handleChange = (name, value) =>
     setData((data) => ({ ...data, [name]: value }));
-  };
+
+  const addImage = useCallback(
+    (newImages) => handleChange("images", [...data.images, ...newImages]),
+    [data]
+  );
+
+  const removeImage = useCallback(
+    (index) =>
+      handleChange("images", [
+        ...data.images.slice(0, index),
+        ...data.images.slice(index + 1),
+      ]),
+    [data]
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -63,25 +66,13 @@ const Input = (props) => {
       sender: conversationId ? null : user,
     };
     await postMessage(reqBody);
-    setData({ text: "" });
+    setData({ text: "", images: [] });
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
+      <ImagePreview images={data.images} removeImage={removeImage} />
       <FormControl fullWidth hiddenLabel>
-        {data.images.length > 0 &&
-          data.images.map((url, index) => {
-            return (
-              <Avatar
-                key={index}
-                src={url}
-                alt="selected from input"
-                className={classes.image}
-                variant="rounded"
-              />
-            );
-          })}
-        <Divider />
         <FilledInput
           classes={{ root: classes.input }}
           disableUnderline
@@ -94,9 +85,9 @@ const Input = (props) => {
               <IconButton color="inherit">
                 <EmojiEmotionsOutlinedIcon />
               </IconButton>
-              <AttachAction onChange={handleChange}>
+              <AttachImageAction onChange={addImage}>
                 <FileCopyOutlinedIcon />
-              </AttachAction>
+              </AttachImageAction>
             </ActionGroup>
           }
         />
