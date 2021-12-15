@@ -1,5 +1,13 @@
 import React from "react";
-import { Avatar, Grid, Paper, Badge, makeStyles } from "@material-ui/core";
+import {
+  Avatar,
+  Grid,
+  Paper,
+  Badge,
+  Divider,
+  Box,
+  makeStyles,
+} from "@material-ui/core";
 
 // components
 import { RemoveAction } from "../Actions/index";
@@ -9,9 +17,11 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.background.secondary,
     width: "100%",
     gap: theme.spacing(2),
-    padding: theme.spacing(2),
-    borderBottom: `2px solid ${theme.palette.text.secondary}`,
+    padding: theme.spacing(2, 0),
     boxSizing: "border-box",
+    overflowY: "hidden",
+    flexWrap: "nowrap",
+    maxWidth: "100%",
   },
   image: {
     width: theme.spacing(8),
@@ -24,6 +34,12 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       background: theme.palette.background.secondary,
     },
+  },
+  divider: {
+    background: theme.palette.text.secondary,
+    padding: theme.spacing(0, 2),
+    opacity: 0.5,
+    height: theme.spacing(0.1),
   },
 }));
 
@@ -38,31 +54,34 @@ const ImagePreview = ({ images, removeImage }) => {
   };
 
   return (
-    <Grid container className={classes.root}>
-      {images.map((url, index) => {
-        return (
-          <Grid item key={index}>
-            <Paper>
-              <Badge
-                badgeContent={
-                  <RemoveAction
-                    className={classes.cancel}
-                    onClick={handleClick(index)}
+    <Box px={2}>
+      <Grid container className={classes.root}>
+        {images.map((url, index) => {
+          return (
+            <Grid item key={index}>
+              <Paper>
+                <Badge
+                  badgeContent={
+                    <RemoveAction
+                      className={classes.cancel}
+                      onClick={handleClick(index)}
+                    />
+                  }
+                >
+                  <Avatar
+                    src={url}
+                    alt="selected from input"
+                    className={classes.image}
+                    variant="rounded"
                   />
-                }
-              >
-                <Avatar
-                  src={url}
-                  alt="selected from input"
-                  className={classes.image}
-                  variant="rounded"
-                />
-              </Badge>
-            </Paper>
-          </Grid>
-        );
-      })}
-    </Grid>
+                </Badge>
+              </Paper>
+            </Grid>
+          );
+        })}
+      </Grid>
+      <Divider classes={{ root: classes.divider }} />
+    </Box>
   );
 };
 

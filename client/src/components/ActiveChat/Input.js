@@ -13,15 +13,18 @@ import { ImagePreview } from "./index";
 const useStyles = makeStyles((theme) => ({
   root: {
     justifySelf: "flex-end",
-    marginTop: 15,
     "& .Mui-focused": {
       background: theme.palette.background.secondary,
     },
+    overflowX: "hidden",
+    background: theme.palette.background.secondary,
+    borderRadius: theme.spacing(1),
+    margin: theme.spacing(3, 0, 4, 0),
+    padding: theme.spacing(1, 0.5),
   },
   input: {
     height: 70,
     borderRadius: theme.spacing(1),
-    marginBottom: 20,
     fontWeight: "600",
     background: theme.palette.background.secondary,
     "&:hover": {
@@ -31,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.secondary,
       opacity: 1,
     },
+    padding: 0,
   },
 }));
 
