@@ -1,19 +1,22 @@
 import React from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import {
-  Grid,
-  Box,
-  Typography,
-  Button,
-  FormControl,
-  TextField,
-} from "@material-ui/core";
+import { Link as MuiLink, makeStyles, TextField } from "@material-ui/core";
+import { AccessLayout, AccessForm, AccessButton } from "./components/Access";
 import { login } from "./store/utils/thunkCreators";
 
+const useStyles = makeStyles((theme) => ({
+  adornment: {
+    fontSize: ".75rem",
+    fontWeight: 600,
+    padding: theme.spacing(0, 2),
+    minWidth: 0,
+  },
+}));
+
 const Login = (props) => {
-  const history = useHistory();
   const { user, login } = props;
+  const classes = useStyles();
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -28,41 +31,49 @@ const Login = (props) => {
   }
 
   return (
-    <Grid container justify="center">
-      <Box>
-        <Grid container item>
-          <Typography>Need to register?</Typography>
-          <Button onClick={() => history.push("/register")}>Register</Button>
-        </Grid>
-        <form onSubmit={handleLogin}>
-          <Grid>
-            <Grid>
-              <FormControl margin="normal" required>
-                <TextField
-                  aria-label="username"
-                  label="Username"
-                  name="username"
-                  type="text"
-                />
-              </FormControl>
-            </Grid>
-            <FormControl margin="normal" required>
-              <TextField
-                label="password"
-                aria-label="password"
-                type="password"
-                name="password"
-              />
-            </FormControl>
-            <Grid>
-              <Button type="submit" variant="contained" size="large">
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-      </Box>
-    </Grid>
+    <AccessLayout
+      href="/register"
+      linkText="Create account"
+      flavorText="Don't have an account?"
+    >
+      <AccessForm onSubmit={handleLogin} header="Welcome back!">
+        <TextField
+          aria-label="username"
+          label="Username"
+          name="username"
+          type="text"
+          fullWidth
+          required
+        />
+        <TextField
+          label="Password"
+          aria-label="password"
+          type="password"
+          name="password"
+          fullWidth
+          required
+          InputProps={{
+            endAdornment: (
+              <MuiLink
+                component={Link}
+                classes={{ root: classes.adornment }}
+                to="/login"
+              >
+                Forgot?
+              </MuiLink>
+            ),
+          }}
+        />
+        <AccessButton
+          type="submit"
+          variant="contained"
+          size="large"
+          color="primary"
+        >
+          Login
+        </AccessButton>
+      </AccessForm>
+    </AccessLayout>
   );
 };
 
