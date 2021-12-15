@@ -6,6 +6,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  addDataToCache,
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -72,8 +73,13 @@ export const logout = (id) => async (dispatch) => {
 const createdAt = (a, b) =>
   moment(a.createdAt).valueOf() - moment(b.createdAt).valueOf();
 
-const sortConversation = (conversation) =>
-  (conversation.messages = conversation.messages.sort(createdAt));
+const sortConversation = (conversation) => {
+  conversation.messages = conversation.messages.sort(createdAt);
+
+  // Used for caching images to a specific conversation
+  conversation.cache = { images: [] };
+  return conversation;
+};
 
 // CONVERSATIONS THUNK CREATORS
 
@@ -115,6 +121,12 @@ export const postMessage = (body) => async (dispatch) => {
     sendMessage(data, body);
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const addToCache = (id, data) => (dispatch) => {
+  if (id) {
+    dispatch(addDataToCache(id, data));
   }
 };
 
