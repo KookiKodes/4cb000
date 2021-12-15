@@ -4,7 +4,7 @@ import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined"
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { postMessage } from "../../store/utils/thunkCreators";
+import { postMessage, addToCache } from "../../store/utils/thunkCreators";
 
 // components
 import { ActionGroup, AttachImageAction } from "../Actions/index";
@@ -36,56 +36,63 @@ const useStyles = makeStyles((theme) => ({
 
 const Input = (props) => {
   const classes = useStyles();
-  const [data, setData] = useState({ text: "", images: [] });
-  const { postMessage, otherUser, conversationId, user } = props;
+  const [text, setText] = useState("");
+  const { postMessage, addToCache, otherUser, conversationId, user, cache } =
+    props;
 
-  const handleChange = (name, value) =>
-    setData((data) => ({ ...data, [name]: value }));
+  const handleChange = ({ target }) => setText(target.value);
 
   const addImage = useCallback(
-    (newImages) => handleChange("images", [...data.images, ...newImages]),
-    [data]
+    (id, currentUrls) => (urls) =>
+      addToCache(id, { images: [...currentUrls, ...urls] }),
+    [addToCache]
   );
 
   const removeImage = useCallback(
-    (index) =>
-      handleChange("images", [
-        ...data.images.slice(0, index),
-        ...data.images.slice(index + 1),
-      ]),
-    [data]
+    (id, currentUrls) => (index) =>
+      addToCache(id, {
+        images: currentUrls
+          .slice(0, index)
+          .concat(currentUrls.slice(index + 1)),
+      }),
+    [addToCache]
   );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
     const reqBody = {
-      text: data.text,
+      text: text,
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
     };
     await postMessage(reqBody);
-    setData({ text: "", images: [] });
+    setText("");
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
-      <ImagePreview images={data.images} removeImage={removeImage} />
+      <ImagePreview
+        images={cache?.images || []}
+        removeImage={removeImage(conversationId, cache.images)}
+      />
       <FormControl fullWidth hiddenLabel>
         <FilledInput
           classes={{ root: classes.input }}
           disableUnderline
           placeholder="Type something..."
-          value={data.text}
+          value={text}
           name="text"
-          onChange={({ target }) => handleChange(target.name, target.value)}
+          onChange={handleChange}
           endAdornment={
             <ActionGroup>
               <IconButton color="inherit">
                 <EmojiEmotionsOutlinedIcon />
               </IconButton>
-              <AttachImageAction onChange={addImage}>
+              <AttachImageAction
+                onChange={addImage(conversationId, cache.images)}
+              >
                 <FileCopyOutlinedIcon />
               </AttachImageAction>
             </ActionGroup>
@@ -100,6 +107,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     postMessage: (message) => {
       dispatch(postMessage(message));
+    },
+    addToCache: (id, data) => {
+      dispatch(addToCache(id, data));
     },
   };
 };
