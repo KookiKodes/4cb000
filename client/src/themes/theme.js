@@ -24,7 +24,7 @@ export const theme = createMuiTheme({
       secondary: "#9CADC8",
     },
     background: {
-      input: "#F4F6FA",
+      secondary: "#F4F6FA",
     },
   },
 });
