@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     color: theme.palette.text.secondary,
     opacity: 0.5,
+    height: "min-content",
   },
 }));
 

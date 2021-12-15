@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { FormControl, FilledInput, IconButton } from "@material-ui/core";
+import {
+  FormControl,
+  FilledInput,
+  IconButton,
+  Divider,
+  Avatar,
+} from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
+import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
@@ -15,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
     "& .Mui-focused": {
       background: theme.palette.background.input,
     },
+  },
+  image: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
   },
   input: {
     height: 70,
@@ -38,6 +49,7 @@ const Input = (props) => {
   const { postMessage, otherUser, conversationId, user } = props;
 
   const handleChange = (name, value) => {
+    console.log(value);
     setData((data) => ({ ...data, [name]: value }));
   };
 
@@ -57,6 +69,19 @@ const Input = (props) => {
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
+        {data.images.length > 0 &&
+          data.images.map((url, index) => {
+            return (
+              <Avatar
+                key={index}
+                src={url}
+                alt="selected from input"
+                className={classes.image}
+                variant="rounded"
+              />
+            );
+          })}
+        <Divider />
         <FilledInput
           classes={{ root: classes.input }}
           disableUnderline
@@ -69,7 +94,9 @@ const Input = (props) => {
               <IconButton color="inherit">
                 <EmojiEmotionsOutlinedIcon />
               </IconButton>
-              <AttachAction onChange={handleChange} />
+              <AttachAction onChange={handleChange}>
+                <FileCopyOutlinedIcon />
+              </AttachAction>
             </ActionGroup>
           }
         />

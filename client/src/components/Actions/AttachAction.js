@@ -1,6 +1,5 @@
 import React from "react";
 import { IconButton, makeStyles } from "@material-ui/core";
-import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 
 // helpers
 import getDataUrl from "./utils/getDataUrl";
@@ -11,16 +10,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AttachAction = ({ onChange }) => {
+const getDataUrls = (files) => Promise.all(Array.from(files).map(getDataUrl));
+
+const AttachAction = ({ onChange, children, ...props }) => {
   const classes = useStyles();
 
   const handleChange = async ({ target }) => {
-    for (const file of target.files) {
-      const data = await getDataUrl(file);
+    const urls = await getDataUrls(target.files);
+    if (onChange) {
+      onChange(target.name, urls);
     }
-    // if (onChange) {
-
-    // }
   };
 
   return (
@@ -35,8 +34,13 @@ const AttachAction = ({ onChange }) => {
         name="images"
       />
       <label htmlFor="contained-button-file">
-        <IconButton variant="contained" color="inherit" component="span">
-          <FileCopyOutlinedIcon />
+        <IconButton
+          variant="contained"
+          color="inherit"
+          component="span"
+          {...props}
+        >
+          {children}
         </IconButton>
       </label>
     </>
