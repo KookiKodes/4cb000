@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   Typography,
   makeStyles,
-  Link as MuiLink,
+  Button,
   Grid,
   ThemeProvider,
 } from "@material-ui/core";
@@ -22,11 +22,17 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(3),
       borderRadius: theme.spacing(1, 1, 0, 0),
     },
+    [theme.breakpoints.down("xs")]: {
+      justifyContent: "center",
+    },
   },
   mobileText: {
     [theme.breakpoints.down("sm")]: {
       fontSize: 12,
       padding: 0,
+    },
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
     },
   },
   children: {
@@ -37,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Layout = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   return (
     <ThemeProvider theme={accessTheme}>
       <PageContainer>
@@ -63,14 +70,15 @@ const Layout = (props) => {
                 </Typography>
               </Grid>
               <Grid item>
-                <MuiLink
-                  component={Link}
-                  to={props.href}
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  size="large"
                   alt={`Go to ${props.linkText}`}
-                  className={classes.mobileText}
+                  onClick={() => history.push(props.href)}
                 >
                   {props.linkText}
-                </MuiLink>
+                </Button>
               </Grid>
             </Grid>
             <Grid item xs={9} className={classes.children}>
