@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ImagePreview = ({ images, removeImage }) => {
   const classes = useStyles();
-  if (images && !images.length) return null;
+  if (!images || !images.length) return null;
 
   const handleClick = (index) => () => {
     if (removeImage) {
