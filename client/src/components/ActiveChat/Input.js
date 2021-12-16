@@ -64,7 +64,9 @@ const Input = (props) => {
       sender: conversationId ? null : user,
       attachments: cache.images,
     };
-    await postMessage(reqBody);
+    if (text || cache.images.length) {
+      await postMessage(reqBody);
+    }
     setText("");
   };
 
