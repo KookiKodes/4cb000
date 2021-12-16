@@ -82,7 +82,7 @@ export const addNewConvoToStore = (state, recipientId, message) => {
 
 export const addDataToConversationCache = (state, convoId, data) => {
   return state.map((convo) => {
-    if (convo.id === convoId) {
+    if (convo.id === convoId || convo.otherUser.id === convoId) {
       const convoCopy = { ...convo };
       convoCopy.cache = data;
       return convoCopy;

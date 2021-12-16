@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: 70,
     borderRadius: theme.spacing(1),
     fontWeight: "600",
+    fontSize: 14,
     background: theme.palette.background.secondary,
     "&:hover": {
       background: theme.palette.background.secondary,
@@ -34,15 +35,14 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.secondary,
       opacity: 1,
     },
-    padding: 0,
   },
 }));
 
 const Input = (props) => {
   const classes = useStyles();
   const [text, setText] = useState("");
-  const { postMessage, addToCache, otherUser, conversationId, user, cache } =
-    props;
+  const { postMessage, addToCache, otherUser, conversationId, user } = props;
+  const cache = props.cache || { images: [] };
 
   const handleChange = ({ target }) => setText(target.value);
 
@@ -62,6 +62,7 @@ const Input = (props) => {
       recipientId: otherUser.id,
       conversationId,
       sender: conversationId ? null : user,
+      attachments: cache.images,
     };
     await postMessage(reqBody);
     setText("");
@@ -70,8 +71,8 @@ const Input = (props) => {
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <ImagePreview
-        images={cache?.images || []}
-        removeImage={removeImage(conversationId, cache.images)}
+        images={cache?.images}
+        removeImage={removeImage(conversationId || otherUser.id, cache.images)}
       />
       <FormControl fullWidth hiddenLabel>
         <FilledInput
@@ -87,7 +88,10 @@ const Input = (props) => {
                 <EmojiEmotionsOutlinedIcon />
               </IconButton>
               <AttachImageAction
-                onChange={addImage(conversationId, cache.images)}
+                onChange={addImage(
+                  conversationId || otherUser.id,
+                  cache.images
+                )}
               >
                 <FileCopyOutlinedIcon />
               </AttachImageAction>
