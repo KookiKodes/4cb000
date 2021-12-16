@@ -10,12 +10,20 @@ import {
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
+// Needed to edit in order to send request to cloudinary api.
 axios.interceptors.request.use(async function (config) {
   const token = await localStorage.getItem("messenger-token");
-  config.headers["x-access-token"] = token;
+  if (config.url.startsWith("/api") || config.url.startsWith("/auth")) {
+    config.headers["x-access-token"] = token;
+  }
 
   return config;
 });
+
+// CONSTANTS
+const cloudinaryApiKey = process.env.REACT_APP_CLOUDINARY_API_KEY || "";
+const cloudinaryUrl = process.env.REACT_APP_CLOUDINARY_UPLOAD_URL || "";
+const cloudinaryPreset = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET || "";
 
 // USER THUNK CREATORS
 
@@ -106,10 +114,23 @@ const sendMessage = (data, body) => {
   });
 };
 
+// helpers for transforming images
+const transformImage = async (image) =>
+  await axios.post(cloudinaryUrl, {
+    file: image,
+    api_key: cloudinaryApiKey,
+    upload_preset: cloudinaryPreset,
+  });
+
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => async (dispatch) => {
   try {
+    if (body.attachments.length) {
+      body.attachments = await Promise.all(
+        body.attachments.map(transformImage)
+      );
+    }
     const data = await saveMessage(body);
 
     if (!body.conversationId) {
