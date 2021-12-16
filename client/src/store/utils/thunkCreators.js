@@ -115,12 +115,14 @@ const sendMessage = (data, body) => {
 };
 
 // helpers for transforming images
-const transformImage = async (image) =>
-  await axios.post(cloudinaryUrl, {
+const transformImage = async (image) => {
+  const res = await axios.post(cloudinaryUrl, {
     file: image,
     api_key: cloudinaryApiKey,
     upload_preset: cloudinaryPreset,
   });
+  return res.data.url;
+};
 
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation

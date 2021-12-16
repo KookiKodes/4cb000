@@ -68,6 +68,7 @@ const Input = (props) => {
       await postMessage(reqBody);
     }
     setText("");
+    addToCache(conversationId || otherUser.id, { images: [] });
   };
 
   return (
