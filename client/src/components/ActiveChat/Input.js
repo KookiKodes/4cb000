@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FormControl, FilledInput, IconButton } from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
@@ -40,14 +40,18 @@ const useStyles = makeStyles((theme) => ({
 
 const Input = (props) => {
   const classes = useStyles();
+  const ref = useRef(null);
   const [text, setText] = useState("");
   const { postMessage, addToCache, otherUser, conversationId, user } = props;
   const cache = props.cache || { images: [] };
 
   const handleChange = ({ target }) => setText(target.value);
 
-  const addImage = (id, currentUrls) => (urls) =>
+  const addImage = (id, currentUrls) => (urls) => {
     addToCache(id, { images: [...currentUrls, ...urls] });
+    ref.current.focus();
+    console.log(ref.current);
+  };
 
   const removeImage = (id, currentUrls) => (index) =>
     addToCache(id, {
@@ -79,6 +83,7 @@ const Input = (props) => {
       />
       <FormControl fullWidth hiddenLabel>
         <FilledInput
+          inputProps={{ ref }}
           classes={{ root: classes.input }}
           disableUnderline
           placeholder="Type something..."
