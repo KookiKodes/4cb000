@@ -15,7 +15,6 @@ import { RemoveAction } from "../Actions/index";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.secondary,
-    width: "100%",
     gap: theme.spacing(4),
     padding: theme.spacing(2, 0),
     boxSizing: "border-box",
