@@ -11,6 +11,23 @@ export const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        "*::-webkit-scrollbar": {
+          width: 4,
+          height: 4,
+        },
+        "*::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(156, 173, 200, .5)",
+          borderRadius: 20,
+          border: "6px solid transparent",
+          backgroundClick: "content-box",
+        },
+        "*::-webkit-scrollbar-thumb:hover": {
+          backgroundColor: "#3A8DFF",
+        },
+      },
+    },
     MuiInput: {
       input: {
         fontWeight: "bold",
