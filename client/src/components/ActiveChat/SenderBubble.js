@@ -2,6 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography } from "@material-ui/core";
 
+// components
+import { Attachments } from "./index";
+
 const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
@@ -33,9 +36,7 @@ const SenderBubble = (props) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      {attachments.map((attachment, index) => {
-        return <img src={attachment} key={index} alt="" />;
-      })}
+      <Attachments attachments={attachments} />
       {text.length > 0 && (
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
