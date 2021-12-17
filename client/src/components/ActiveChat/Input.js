@@ -50,12 +50,11 @@ const Input = (props) => {
   const addImage = (id, currentUrls) => (urls) => {
     addToCache(id, { images: [...currentUrls, ...urls] });
     ref.current.focus();
-    console.log(ref.current);
   };
 
   const removeImage = (id, currentUrls) => (index) =>
     addToCache(id, {
-      images: currentUrls.slice(0, index).concat(currentUrls.slice(index + 1)),
+      images: [...currentUrls.slice(0, index), ...currentUrls.slice(index + 1)],
     });
 
   const handleSubmit = async (event) => {
