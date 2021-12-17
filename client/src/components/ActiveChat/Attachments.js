@@ -1,17 +1,21 @@
 import React from "react";
-import { Box, Grid, makeStyles } from "@material-ui/core";
+import { Grid, Box, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    flexWrap: "nowrap",
+    maxWidth: "100%",
+    boxSizing: "border-box",
+    overflowY: "hidden",
+  },
   item: {
-    overflow: "hidden",
     width: "min-content",
     height: "min-content",
   },
   image: {
     objectFit: "cover",
     objectPosition: "center",
-    width: 150,
-    borderRadius: theme.spacing(1.5),
+    borderRadius: theme.spacing(1, 1, 0, 1),
   },
 }));
 
@@ -19,12 +23,17 @@ const Attachments = ({ attachments }) => {
   const classes = useStyles();
   const many = attachments.length > 1;
   return (
-    <Grid container justifyContent="flex-end">
+    <Grid
+      container
+      spacing={1}
+      className={classes.root}
+      direction="row-reverse"
+    >
       {attachments.map((attachment, index) => (
         <Grid item className={classes.item} key={index}>
           <img
-            key={index}
-            height={many ? 100 : 150}
+            height={many ? 75 : 150}
+            width={many ? 100 : 150}
             src={attachment}
             alt=""
             className={classes.image}
