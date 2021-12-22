@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@material-ui/core";
-import { SenderBubble, OtherUserBubble } from "../ActiveChat";
+import { SenderBubble, OtherUserBubble } from "./index";
 import moment from "moment";
 
 const Messages = (props) => {

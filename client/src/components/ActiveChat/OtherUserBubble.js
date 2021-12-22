@@ -3,9 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar } from "@material-ui/core";
 
 // components
-import { Attachments } from "./index";
+import { Bubble } from "./Bubble/index";
+import useBubbleVariant from "./utils/useBubbleVariant";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
@@ -15,20 +16,15 @@ const useStyles = makeStyles(() => ({
     marginRight: 11,
     marginTop: 6,
   },
-  usernameDate: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
   bubble: {
-    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 10px 10px 10px",
+    backgroundImage: theme.palette.background.chatBubble,
+    borderRadius: theme.spacing(1.5, 1.5, 1.5, 0),
+    margin: theme.spacing(1.5, 0),
   },
   text: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#FFFFFF",
+    color: theme.palette.text.contrast,
     letterSpacing: -0.2,
     padding: 8,
   },
@@ -37,6 +33,8 @@ const useStyles = makeStyles(() => ({
 const OtherUserBubble = (props) => {
   const classes = useStyles();
   const { text, time, attachments, otherUser } = props;
+  const variant = useBubbleVariant(text, attachments);
+
   return (
     <Box className={classes.root}>
       <Avatar
@@ -45,15 +43,16 @@ const OtherUserBubble = (props) => {
         className={classes.avatar}
       ></Avatar>
       <Box>
-        <Typography className={classes.usernameDate}>
-          {otherUser.username} {time}
-        </Typography>
-        <Attachments attachments={attachments} />
-        {text.length > 0 && (
-          <Box className={classes.bubble}>
+        <Bubble
+          attachments={attachments}
+          time={`${otherUser.username} ${time}`}
+          BubbleContent={
             <Typography className={classes.text}>{text}</Typography>
-          </Box>
-        )}
+          }
+          variant={variant}
+          className={classes.bubble}
+          inverse={true}
+        />
       </Box>
     </Box>
   );

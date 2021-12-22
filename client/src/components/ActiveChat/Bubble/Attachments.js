@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Box, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "100%",
     boxSizing: "border-box",
     overflowY: "hidden",
+    margin: 0,
   },
   item: {
     width: "min-content",
@@ -15,11 +16,16 @@ const useStyles = makeStyles((theme) => ({
   image: {
     objectFit: "cover",
     objectPosition: "center",
-    borderRadius: theme.spacing(1, 1, 0, 1),
+    borderRadius: theme.spacing(1.5, 1.5, 0, 1.5),
+  },
+  inverseImage: {
+    objectFit: "cover",
+    objectPosition: "center",
+    borderRadius: theme.spacing(1.5, 1.5, 1.5, 0),
   },
 }));
 
-const Attachments = ({ attachments }) => {
+const Attachments = ({ attachments, inverse }) => {
   const classes = useStyles();
   const many = attachments.length > 1;
   return (
@@ -36,7 +42,7 @@ const Attachments = ({ attachments }) => {
             width={many ? 100 : 150}
             src={attachment}
             alt=""
-            className={classes.image}
+            className={inverse ? classes.inverseImage : classes.image}
           />
         </Grid>
       ))}
