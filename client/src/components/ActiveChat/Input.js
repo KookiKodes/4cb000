@@ -1,4 +1,10 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import { FormControl, FilledInput, IconButton } from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
@@ -48,7 +54,10 @@ const Input = (props) => {
   const ref = useRef(null);
   const [text, setText] = useState("");
   const { postMessage, addToCache, otherUser, conversationId, user } = props;
-  const cache = props.cache || { images: [], typing: false };
+  const cache = useMemo(
+    () => props.cache || { images: [], typing: false },
+    [props.cache]
+  );
 
   const handleChange = useCallback(
     ({ target }) => {
@@ -70,24 +79,27 @@ const Input = (props) => {
       images: [...currentUrls.slice(0, index), ...currentUrls.slice(index + 1)],
     });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-    const reqBody = {
-      text: text,
-      recipientId: otherUser.id,
-      conversationId,
-      sender: conversationId ? null : user,
-      attachments: cache.images,
-    };
-    if (text || cache.images.length) {
-      await postMessage(reqBody);
-      setText("");
-      addToCache(conversationId || otherUser.id, { images: [] });
-      alertTyping(conversationId || otherUser.id, false);
-      typingRef.current = null;
-    }
-  };
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+      const reqBody = {
+        text: text,
+        recipientId: otherUser.id,
+        conversationId,
+        sender: conversationId ? null : user,
+        attachments: cache.images || [],
+      };
+      if (text || cache.images.length) {
+        await postMessage(reqBody);
+        setText("");
+        addToCache(conversationId || otherUser.id, { images: [] });
+        alertTyping(conversationId || otherUser.id);
+        typingRef.current = null;
+      }
+    },
+    [addToCache, cache, text, conversationId, otherUser, postMessage, user]
+  );
 
   useEffect(() => {
     typingRef.current = setTimeout(() => {

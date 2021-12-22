@@ -46,7 +46,7 @@ const Messages = (props) => {
           />
         );
       })}
-      {cache.typing && (
+      {cache?.typing && (
         <OtherUserBubble time="" otherUser={otherUser}>
           <Box className={classes.text}>
             <MoreHorizTwoToneIcon style={{ fontSize: 32 }} />
