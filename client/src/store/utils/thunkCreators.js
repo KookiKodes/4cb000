@@ -85,7 +85,7 @@ const sortConversation = (conversation) => {
   conversation.messages = conversation.messages.sort(createdAt);
 
   // Used for caching images to a specific conversation
-  conversation.cache = { images: [] };
+  conversation.cache = { images: [], typing: false };
   return conversation;
 };
 
@@ -111,6 +111,13 @@ const sendMessage = (data, body) => {
     message: data.message,
     recipientId: body.recipientId,
     sender: data.sender,
+  });
+};
+
+export const alertTyping = (id, typing = false) => {
+  socket.emit("alert-typing", {
+    convoId: id,
+    cache: { typing },
   });
 };
 
