@@ -11,7 +11,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DefaultBubble = ({ time, attachments, BubbleContent, ...props }) => {
+const DefaultBubble = ({
+  time,
+  attachments,
+  BubbleContent,
+  inverse,
+  ...props
+}) => {
   const classes = useStyles();
   return (
     <>

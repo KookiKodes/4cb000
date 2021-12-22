@@ -15,13 +15,14 @@ const TextAttachmentsBubble = ({
   time,
   attachments,
   BubbleContent,
+  inverse,
   ...props
 }) => {
   const classes = useStyles();
   return (
     <>
       <Box {...props}>{BubbleContent}</Box>
-      <Attachments attachments={attachments} inverse={props.inverse} />
+      <Attachments attachments={attachments} inverse={inverse} />
       <Typography className={classes.date}>{time}</Typography>
     </>
   );

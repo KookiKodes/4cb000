@@ -27,7 +27,7 @@ const BubbleCard = withStyles((theme) => ({
   },
 }))(Card);
 
-const CardBubble = ({ time, attachment, BubbleContent, ...props }) => {
+const CardBubble = ({ time, attachment, BubbleContent, inverse, ...props }) => {
   const classes = useStyles();
   return (
     <>
