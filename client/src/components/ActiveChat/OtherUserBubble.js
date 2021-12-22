@@ -16,10 +16,14 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 11,
     marginTop: 6,
   },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(0.5),
+  },
   bubble: {
     backgroundImage: theme.palette.background.chatBubble,
-    borderRadius: theme.spacing(1.5, 1.5, 1.5, 0),
-    margin: theme.spacing(1.5, 0),
+    borderRadius: theme.spacing(0, 1.5, 1.5, 1.5),
   },
   text: {
     fontSize: 14,
@@ -32,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 const OtherUserBubble = (props) => {
   const classes = useStyles();
-  const { text, time, attachments, otherUser } = props;
+  const { text, time, attachments, otherUser, children } = props;
   const variant = useBubbleVariant(text, attachments);
 
   return (
@@ -42,12 +46,12 @@ const OtherUserBubble = (props) => {
         src={otherUser.photoUrl}
         className={classes.avatar}
       ></Avatar>
-      <Box>
+      <Box className={classes.container}>
         <Bubble
           attachments={attachments}
           time={`${otherUser.username} ${time}`}
           BubbleContent={
-            <Typography className={classes.text}>{text}</Typography>
+            children || <Typography className={classes.text}>{text}</Typography>
           }
           variant={variant}
           className={classes.bubble}

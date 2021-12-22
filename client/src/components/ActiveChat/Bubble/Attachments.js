@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   inverseImage: {
     objectFit: "cover",
     objectPosition: "center",
-    borderRadius: theme.spacing(1.5, 1.5, 1.5, 0),
+    borderRadius: theme.spacing(0, 1.5, 1.5, 1.5),
   },
 }));
 
