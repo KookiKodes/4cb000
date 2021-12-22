@@ -51,7 +51,7 @@ const OtherUserBubble = (props) => {
           }
           variant={variant}
           className={classes.bubble}
-          inverse={true}
+          inverse
         />
       </Box>
     </Box>
