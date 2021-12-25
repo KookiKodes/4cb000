@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   bubble: {
     backgroundImage: theme.palette.background.chatBubble,
-    borderRadius: theme.spacing(1.5, 1.5, 1.5, 0),
+    borderRadius: theme.spacing(0, 1.5, 1.5, 1.5),
     margin: theme.spacing(1.5, 0),
   },
   text: {

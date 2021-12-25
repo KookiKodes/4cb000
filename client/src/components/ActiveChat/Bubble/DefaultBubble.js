@@ -21,9 +21,9 @@ const DefaultBubble = ({
   const classes = useStyles();
   return (
     <>
+      <Typography className={classes.date}>{time}</Typography>
       <Attachments attachments={attachments} />
       <Box {...props}>{BubbleContent}</Box>
-      <Typography className={classes.date}>{time}</Typography>
     </>
   );
 };
