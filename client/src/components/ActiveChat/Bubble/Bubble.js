@@ -18,9 +18,6 @@ const Bubble = ({ variant, ...props }) =>
   valid.includes(variant.toLowerCase())
     ? createElement(Bubble[capitalize(variant)], props)
     : createElement(Bubble.Default, props);
-// variant
-//   ? createElement(Bubble[capitalize(variant)], props)
-//   : createElement(Bubble.Default, props);
 
 Bubble.Default = (props) => <DefaultBubble {...props} />;
 Bubble.Image = (props) => <ImageBubble {...props} />;
