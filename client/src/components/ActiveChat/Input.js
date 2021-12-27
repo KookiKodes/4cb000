@@ -1,24 +1,17 @@
-import React, {
-  useState,
-  useMemo,
-  useCallback,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useMemo, useRef } from "react";
 import { FormControl, FilledInput, IconButton } from "@material-ui/core";
 import EmojiEmotionsOutlinedIcon from "@material-ui/icons/EmojiEmotionsOutlined";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import {
-  postMessage,
-  addToCache,
-  alertTyping,
-} from "../../store/utils/thunkCreators";
+import { postMessage, addToCache } from "../../store/utils/thunkCreators";
 
 // components
 import { ActionGroup, AttachImageAction } from "../Actions/index";
 import { ImagePreview } from "./index";
+
+// hooks
+import useTyping from "./utils/useTyping";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,23 +43,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Input = (props) => {
   const classes = useStyles();
-  const typingRef = useRef(null);
   const ref = useRef(null);
-  const [text, setText] = useState("");
   const { postMessage, addToCache, otherUser, conversationId, user } = props;
+  const [text, { updateTyping, resetTyping }] = useTyping(
+    conversationId,
+    otherUser.online
+  );
   const cache = useMemo(
     () => props.cache || { images: [], typing: false },
     [props.cache]
-  );
-
-  const handleChange = useCallback(
-    ({ target }) => {
-      if (!typingRef.current) {
-        alertTyping(conversationId || user.id, true);
-      }
-      setText(target.value);
-    },
-    [conversationId, user.id]
   );
 
   const addImage = (id, currentUrls) => (urls) => {
@@ -79,35 +64,26 @@ const Input = (props) => {
       images: [...currentUrls.slice(0, index), ...currentUrls.slice(index + 1)],
     });
 
-  const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-      // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
-      const reqBody = {
-        text: text,
-        recipientId: otherUser.id,
-        conversationId,
-        sender: conversationId ? null : user,
-        attachments: cache.images || [],
-      };
-      if (text || cache.images.length) {
-        await postMessage(reqBody);
-        setText("");
-        addToCache(conversationId || otherUser.id, { images: [] });
-        alertTyping(conversationId || otherUser.id);
-        typingRef.current = null;
-      }
-    },
-    [addToCache, cache, text, conversationId, otherUser, postMessage, user]
-  );
+  const handleChange = (event) => {
+    updateTyping(event.target.value);
+  };
 
-  useEffect(() => {
-    typingRef.current = setTimeout(() => {
-      alertTyping(conversationId || user.id);
-      typingRef.current = null;
-    }, 500);
-    return () => clearTimeout(typingRef.current);
-  }, [text, conversationId, otherUser.id, user]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // add sender user info if posting to a brand new convo, so that the other user will have access to username, profile pic, etc.
+    const reqBody = {
+      text: text,
+      recipientId: otherUser.id,
+      conversationId,
+      sender: conversationId ? null : user,
+      attachments: cache.images || [],
+    };
+    if (text || cache.images.length) {
+      await postMessage(reqBody);
+      addToCache(conversationId || otherUser.id, { images: [] });
+      resetTyping(true);
+    }
+  };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
