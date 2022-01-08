@@ -4,6 +4,7 @@ import {
   DefaultBubble,
   ImageBubble,
   TextAttachmentsBubble,
+  TypingBubble,
 } from "./index";
 
 const capitalize = (str) =>
@@ -12,7 +13,7 @@ const capitalize = (str) =>
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join("_");
 
-const valid = ["default", "card", "image", "text attachments"];
+const valid = ["default", "card", "image", "text attachments", "typing"];
 const Bubble = ({ variant, ...props }) =>
   valid.includes(variant.toLowerCase())
     ? createElement(Bubble[capitalize(variant)], props)
@@ -24,5 +25,6 @@ Bubble.Card = ({ attachments, ...props }) => (
   <CardBubble attachment={attachments[0]} {...props} />
 );
 Bubble.Text_Attachments = (props) => <TextAttachmentsBubble {...props} />;
+Bubble.Typing = (props) => <TypingBubble {...props} />;
 
 export default Bubble;

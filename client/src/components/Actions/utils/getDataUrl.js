@@ -7,4 +7,5 @@ const getDataUrl = async (file) => {
     reader.readAsDataURL(file);
   });
 };
+
 export default getDataUrl;
