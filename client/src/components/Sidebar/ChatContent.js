@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     marginLeft: 20,
     flexGrow: 1,
+    maxWidth: "10rem",
+    width: "10rem",
+  },
+  container: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   },
   username: {
     fontWeight: "bold",
@@ -28,11 +34,11 @@ const ChatContent = (props) => {
 
   return (
     <Box className={classes.root}>
-      <Box>
-        <Typography className={classes.username}>
+      <Box className={classes.container}>
+        <Typography className={classes.username} noWrap>
           {otherUser.username}
         </Typography>
-        <Typography className={classes.previewText}>
+        <Typography className={classes.previewText} noWrap>
           {latestMessageText}
         </Typography>
       </Box>

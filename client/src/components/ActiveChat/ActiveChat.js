@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     display: "flex",
     flexGrow: 8,
     flexDirection: "column",
+    overflowX: "hidden",
   },
   chatContainer: {
     marginLeft: 41,
@@ -43,6 +44,7 @@ const ActiveChat = (props) => {
               otherUser={conversation.otherUser}
               conversationId={conversation.id}
               user={user}
+              cache={conversation.cache}
             />
           </Box>
         </>

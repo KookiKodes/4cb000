@@ -2,48 +2,57 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Avatar } from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+// components
+import { Bubble } from "./Bubble/index";
+import useBubbleVariant from "./utils/useBubbleVariant";
+
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   avatar: {
     height: 30,
     width: 30,
     marginRight: 11,
-    marginTop: 6
-  },
-  usernameDate: {
-    fontSize: 11,
-    color: "#BECCE2",
-    fontWeight: "bold",
-    marginBottom: 5
+    marginTop: 6,
   },
   bubble: {
-    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "0 10px 10px 10px"
+    backgroundImage: theme.palette.background.chatBubble,
+    borderRadius: theme.spacing(0, 1.5, 1.5, 1.5),
+    margin: theme.spacing(1.5, 0),
   },
   text: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#FFFFFF",
+    color: theme.palette.text.contrast,
     letterSpacing: -0.2,
-    padding: 8
-  }
+    padding: 8,
+  },
 }));
 
 const OtherUserBubble = (props) => {
   const classes = useStyles();
-  const { text, time, otherUser } = props;
+  const { text, time, attachments, otherUser } = props;
+  const variant = useBubbleVariant(text, attachments);
+
   return (
     <Box className={classes.root}>
-      <Avatar alt={otherUser.username} src={otherUser.photoUrl} className={classes.avatar}></Avatar>
+      <Avatar
+        alt={otherUser.username}
+        src={otherUser.photoUrl}
+        className={classes.avatar}
+      ></Avatar>
       <Box>
-        <Typography className={classes.usernameDate}>
-          {otherUser.username} {time}
-        </Typography>
-        <Box className={classes.bubble}>
-          <Typography className={classes.text}>{text}</Typography>
-        </Box>
+        <Bubble
+          attachments={attachments}
+          time={`${otherUser.username} ${time}`}
+          BubbleContent={
+            <Typography className={classes.text}>{text}</Typography>
+          }
+          variant={variant}
+          className={classes.bubble}
+          inverse
+        />
       </Box>
     </Box>
   );
